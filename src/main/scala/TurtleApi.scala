@@ -1,3 +1,7 @@
+package turtle.api
+
+import turtle._
+
 import cats.syntax.all._
 
 import scala.util.Try

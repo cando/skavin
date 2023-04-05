@@ -1,3 +1,6 @@
+import turtle._
+import turtle.api._
+
 import cats.data.StateT
 import cats.data.EitherT
 import cats.data.Writer
@@ -338,5 +341,55 @@ class TurtleOperation extends munit.FunSuite {
       _ <- doMove(d)
 
     } yield ()
+
+  test("free monad hacky api compiler solution") {
+
+    import turtle.free._
+
+    val computation = for {
+      _ <- turn("90")
+      _ <- move("12")
+      r <- done()
+    } yield r
+
+    val newT =
+      computation.foldMap(apiHackyVarCompiler)
+
+    assertEquals(
+      newT.fold(identity, identity),
+      Turtle(
+        position = Position(0, 12),
+        angle = Angle(90),
+        penColor = PenColor.Black,
+        penState = PenState.Down
+      )
+    )
+
+  }
+
+  test("free monad state api compiler solution") {
+
+    import turtle.free._
+
+    val computation = for {
+      _ <- turn("90")
+      _ <- move("12")
+      r <- done()
+    } yield r
+
+    val newT =
+      computation.foldMap(apiStateCompiler).run(Turtle())
+
+    assertEquals(
+      newT.fold(identity, _._1),
+      Turtle(
+        position = Position(0, 12),
+        angle = Angle(90),
+        penColor = PenColor.Black,
+        penState = PenState.Down
+      )
+    )
+
+  }
 
 }

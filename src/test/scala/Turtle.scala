@@ -1,3 +1,5 @@
+import turtle._
+
 class TurtleTest extends munit.FunSuite {
   test("move turtle") {
     val t = Turtle(Position(0, 0), Angle(0), PenState.Up, PenColor.Red)

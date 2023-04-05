@@ -1,3 +1,6 @@
+import turtle._
+import turtle.api._
+
 class TurtleApiTest extends munit.FunSuite {
   test("api move turtle success") {
     val t = Turtle(Position(0, 0), Angle(0), PenState.Up, PenColor.Red)

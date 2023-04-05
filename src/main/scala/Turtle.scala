@@ -1,3 +1,5 @@
+package turtle
+
 case class Turtle(
     position: Position = Position(),
     angle: Angle = Angle(),
